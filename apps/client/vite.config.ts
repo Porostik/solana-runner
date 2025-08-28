@@ -1,10 +1,11 @@
 /// <reference types='vitest' />
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/sol-runner',
+  cacheDir: '../../node_modules/.vite/apps/client',
   server: {
     port: 4200,
     host: 'localhost',
@@ -18,6 +19,11 @@ export default defineConfig(() => ({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   build: {
     outDir: './dist',
     emptyOutDir: true,
