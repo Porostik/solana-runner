@@ -1,4 +1,3 @@
-import { PublicKey } from '@solana/web3.js';
 import BN from 'bn.js';
 
 export type Player = {
@@ -12,5 +11,5 @@ export type PlayerPdaData = {
   name: string;
   tgId: BN;
   maxScore: BN;
-  pubkey: PublicKey;
+  pubkey: import('@solana/web3.js').PublicKey;
 };

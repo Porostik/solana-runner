@@ -4,7 +4,7 @@ import {
   useNavigate,
   useRouter,
 } from '@tanstack/react-router';
-import { playerModel, processPlayerPda } from '@/entity/player';
+import { playerModel } from '@/entity/player';
 import { LoginForm } from '@/feature/login/ui/form';
 import { loginFn } from '@/server-functions';
 

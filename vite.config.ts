@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import path from 'path';
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   server: {
     port: 3000,
   },
@@ -31,6 +31,7 @@ export default defineConfig({
     },
   },
   ssr: {
-    noExternal: ['jayson'],
+    noExternal: isSsrBuild ? true : undefined,
+    target: 'node',
   },
-});
+}));
