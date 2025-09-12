@@ -7,7 +7,8 @@
   "scripts": {
     "client:dev": "vite dev",
     "program:test": "mocha tests/**/*.ts",
-    "client:build": "vite build"
+    "client:build": "vite build",
+    "postinstall": "patch-package"
   },
   "private": true,
   "dependencies": {
@@ -55,6 +56,7 @@
     "jiti": "2.4.2",
     "jsdom": "~22.1.0",
     "mocha": "^9.0.3",
+    "patch-package": "^8.0.0",
     "postcss": "8.4.38",
     "prettier": "^2.6.2",
     "tailwindcss": "3.4.3",

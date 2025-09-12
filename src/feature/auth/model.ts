@@ -38,6 +38,12 @@ export const authModel = atom(() => {
     target: playerModel.setPlayer,
   });
 
+  sample({
+    clock: verifyFx.fail,
+    fn: () => false,
+    target: setLoading,
+  });
+
   return {
     loading: $loading,
     verifyFx,

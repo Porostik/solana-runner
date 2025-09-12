@@ -34,6 +34,8 @@ export const verifyUserFn = createServerFn({ method: 'POST' })
         player: processPlayerPda(player),
       };
     } catch (error) {
+      console.log(error);
+
       return {
         ok: false,
         error: new Error(error as any),

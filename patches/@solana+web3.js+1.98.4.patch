@@ -1,0 +1,78 @@
+diff --git a/node_modules/@solana/web3.js/lib/index.browser.cjs.js b/node_modules/@solana/web3.js/lib/index.browser.cjs.js
+index 7384771..195d1fc 100644
+--- a/node_modules/@solana/web3.js/lib/index.browser.cjs.js
++++ b/node_modules/@solana/web3.js/lib/index.browser.cjs.js
+@@ -9,7 +9,7 @@ var borsh = require('borsh');
+ var BufferLayout = require('@solana/buffer-layout');
+ var codecsNumbers = require('@solana/codecs-numbers');
+ var superstruct = require('superstruct');
+-var RpcClient = require('jayson/lib/client/browser');
++var RpcClient = require('jayson/lib/client/browser/index.js');
+ var rpcWebsockets = require('rpc-websockets');
+ var sha3 = require('@noble/hashes/sha3');
+ var secp256k1 = require('@noble/curves/secp256k1');
+diff --git a/node_modules/@solana/web3.js/lib/index.browser.esm.js b/node_modules/@solana/web3.js/lib/index.browser.esm.js
+index 3547e97..1e1daa7 100644
+--- a/node_modules/@solana/web3.js/lib/index.browser.esm.js
++++ b/node_modules/@solana/web3.js/lib/index.browser.esm.js
+@@ -8,7 +8,7 @@ import * as BufferLayout from '@solana/buffer-layout';
+ import { blob } from '@solana/buffer-layout';
+ import { getU64Codec, getU64Encoder } from '@solana/codecs-numbers';
+ import { coerce, instance, string, tuple, literal, unknown, type, number, array, nullable, optional, boolean, record, union, create, any, assert as assert$1 } from 'superstruct';
+-import RpcClient from 'jayson/lib/client/browser';
++import RpcClient from 'jayson/lib/client/browser/index.js';
+ import { CommonClient, WebSocket } from 'rpc-websockets';
+ import { keccak_256 } from '@noble/hashes/sha3';
+ import { secp256k1 } from '@noble/curves/secp256k1';
+diff --git a/node_modules/@solana/web3.js/lib/index.cjs.js b/node_modules/@solana/web3.js/lib/index.cjs.js
+index fece8e0..bcd32dd 100644
+--- a/node_modules/@solana/web3.js/lib/index.cjs.js
++++ b/node_modules/@solana/web3.js/lib/index.cjs.js
+@@ -12,7 +12,7 @@ var require$$0 = require('util');
+ var require$$0$1 = require('http');
+ var require$$0$2 = require('https');
+ var superstruct = require('superstruct');
+-var RpcClient = require('jayson/lib/client/browser');
++var RpcClient = require('jayson/lib/client/browser/index.js');
+ var nodeFetch = require('node-fetch');
+ var rpcWebsockets = require('rpc-websockets');
+ var sha3 = require('@noble/hashes/sha3');
+diff --git a/node_modules/@solana/web3.js/lib/index.esm.js b/node_modules/@solana/web3.js/lib/index.esm.js
+index 9df4075..c0b21b1 100644
+--- a/node_modules/@solana/web3.js/lib/index.esm.js
++++ b/node_modules/@solana/web3.js/lib/index.esm.js
+@@ -11,7 +11,7 @@ import require$$0 from 'util';
+ import require$$0$1 from 'http';
+ import require$$0$2, { Agent } from 'https';
+ import { coerce, instance, string, tuple, literal, unknown, type, number, array, nullable, optional, boolean, record, union, create, any, assert as assert$1 } from 'superstruct';
+-import RpcClient from 'jayson/lib/client/browser';
++import RpcClient from 'jayson/lib/client/browser/index.js';
+ import * as nodeFetch from 'node-fetch';
+ import { CommonClient, WebSocket } from 'rpc-websockets';
+ import { keccak_256 } from '@noble/hashes/sha3';
+diff --git a/node_modules/@solana/web3.js/lib/index.native.js b/node_modules/@solana/web3.js/lib/index.native.js
+index d3c6d8f..cde985e 100644
+--- a/node_modules/@solana/web3.js/lib/index.native.js
++++ b/node_modules/@solana/web3.js/lib/index.native.js
+@@ -9,7 +9,7 @@ var borsh = require('borsh');
+ var BufferLayout = require('@solana/buffer-layout');
+ var codecsNumbers = require('@solana/codecs-numbers');
+ var superstruct = require('superstruct');
+-var RpcClient = require('jayson/lib/client/browser');
++var RpcClient = require('jayson/lib/client/browser/index.js');
+ var rpcWebsockets = require('rpc-websockets');
+ var sha3 = require('@noble/hashes/sha3');
+ var secp256k1 = require('@noble/curves/secp256k1');
+diff --git a/node_modules/@solana/web3.js/src/connection.ts b/node_modules/@solana/web3.js/src/connection.ts
+index 5f82fee..791da3e 100644
+--- a/node_modules/@solana/web3.js/src/connection.ts
++++ b/node_modules/@solana/web3.js/src/connection.ts
+@@ -26,7 +26,7 @@ import {
+   any,
+ } from 'superstruct';
+ import type {Struct} from 'superstruct';
+-import RpcClient from 'jayson/lib/client/browser';
++import RpcClient from 'jayson/lib/client/browser/index.js';
+ import {JSONRPCError} from 'jayson';
+ 
+ import {EpochSchedule} from './epoch-schedule';
