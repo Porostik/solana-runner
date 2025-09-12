@@ -55,12 +55,11 @@ export const Route = createRootRoute({
       player: player,
     };
   },
-  ssr: false,
   pendingComponent: () => <PageLoader />,
 });
 
 function RootDocument() {
-  const { loading, isTWAActive } = useVerifyPlayer();
+  const { loading, isTWAActive, error } = useVerifyPlayer();
 
   return (
     <html>
@@ -70,6 +69,7 @@ function RootDocument() {
       </head>
       <body>
         <RouterContextBridge />
+        {error && <span className="text-secondary">{error}</span>}
         {!isTWAActive && <TgError />}
         {loading && isTWAActive && <PageLoader />}
         {!loading && isTWAActive && <Outlet />}

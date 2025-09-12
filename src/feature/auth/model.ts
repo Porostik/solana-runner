@@ -5,12 +5,19 @@ import { createEffect, createEvent, createStore, sample } from 'effector';
 
 export const authModel = atom(() => {
   const setLoading = createEvent<boolean>();
+  const setError = createEvent<string>();
+
+  const $error = createStore('').on(setError, (_, error) => setError(error));
 
   const $loading = createStore(true).on(setLoading, (_, loading) => loading);
 
   const verifyFx = createEffect(async ({ initData }: { initData: string }) => {
-    const player = await verifyUserFn({ data: { initData } });
-    return player;
+    const result = await verifyUserFn({ data: { initData } });
+    if (!result.ok) {
+      setError(result.error?.message ?? '');
+      return null;
+    }
+    return result.player ?? null;
   });
 
   sample({
@@ -34,5 +41,6 @@ export const authModel = atom(() => {
   return {
     loading: $loading,
     verifyFx,
+    error: $error,
   };
 });

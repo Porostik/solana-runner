@@ -37,6 +37,8 @@ export function verifyTelegramInitData(
   let user: any = undefined;
   if (data.user) {
     try {
+      console.log(data);
+
       user = JSON.parse(decodeURIComponent(data.user));
     } catch {}
   }

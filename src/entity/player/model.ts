@@ -3,7 +3,7 @@ import { createEvent, createStore } from 'effector';
 import { Player } from './types';
 
 export const playerModel = atom(() => {
-  const setPlayer = createEvent<Player>();
+  const setPlayer = createEvent<Player | null>();
   const setScore = createEvent<number>();
 
   const $player = createStore<Player | null>(null)

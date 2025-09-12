@@ -3,7 +3,6 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authed')({
   component: RouteComponent,
-  ssr: false,
   beforeLoad: ({ context }) => {
     if (!context.player) {
       throw redirect({

@@ -10,7 +10,6 @@ import { loginFn } from '@/server-functions';
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
-  ssr: false,
   beforeLoad: ({ context }) => {
     if (context.player) {
       return redirect({ to: '/game' });

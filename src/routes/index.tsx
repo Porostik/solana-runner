@@ -2,7 +2,6 @@ import { createFileRoute, redirect } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/')({
   component: Home,
-  ssr: false,
   beforeLoad: () => {
     return redirect({ to: '/game' });
   },

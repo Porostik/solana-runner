@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
 import path from 'path';
 
-export default defineConfig(({ isSsrBuild }) => ({
+export default defineConfig(({}) => ({
   server: {
     port: 3000,
   },
@@ -11,7 +11,6 @@ export default defineConfig(({ isSsrBuild }) => ({
     tanstackStart({
       target: 'vercel',
       customViteReactPlugin: true,
-      spa: { enabled: true },
     }),
   ],
 
@@ -31,7 +30,9 @@ export default defineConfig(({ isSsrBuild }) => ({
     },
   },
   ssr: {
-    noExternal: isSsrBuild ? true : undefined,
+    noExternal: [/^jayson(\/.*)?$/],
+    external: ['uuid'],
     target: 'node',
   },
+  optimizeDeps: { exclude: ['jayson'] },
 }));

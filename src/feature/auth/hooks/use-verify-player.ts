@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 
 export const useVerifyPlayer = () => {
-  const { loading, verify } = useUnit({
+  const { loading, verify, error } = useUnit({
     verify: authModel.verifyFx,
     loading: authModel.loading,
+    error: authModel.error,
   });
 
   const [isTWAActive, setIsTWAActive] = useState(true);
@@ -38,5 +39,6 @@ export const useVerifyPlayer = () => {
   return {
     loading,
     isTWAActive,
+    error,
   };
 };
