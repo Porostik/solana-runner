@@ -56,3 +56,6 @@ test-ledger
 
 .env.*
 local.json
+.nitro
+.tanstack
+.vercel
