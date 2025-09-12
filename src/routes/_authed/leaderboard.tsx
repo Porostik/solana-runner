@@ -9,6 +9,7 @@ export const Route = createFileRoute('/_authed/leaderboard')({
   loader: async () => {
     return await getLeaderboardFn();
   },
+  ssr: false,
   pendingComponent: () => <PageLoader />,
 });
 
