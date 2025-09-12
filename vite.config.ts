@@ -12,7 +12,7 @@ export default defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tanstackStart({
-      target: 'vercel',
+      target: 'netlify',
       customViteReactPlugin: true,
       spa: { enabled: true },
     }),
