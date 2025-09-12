@@ -10,8 +10,8 @@ import { obstacleModule } from './obstacle';
 import { hitObject } from './hit';
 import { spawnObjectFabric } from './object';
 import { coinModule } from './coin';
-import { setScoreFn } from '@/feature/game';
 import { playerModel } from '@/entity/player';
+import { setScoreFn } from '@/server-functions';
 
 export type GameStatus = 'idle' | 'process';
 

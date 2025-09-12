@@ -1,32 +1,15 @@
-import { playerModel, processPlayerPda } from '@/entity/player';
-import { solanaMiddleware } from '@/middlewares/solana';
-import { cn } from '@/shared/utils/cn';
-import { PublicKey } from '@solana/web3.js';
+import { playerModel } from '@/entity/player';
+import { getLeaderboardFn } from '@/server-functions';
+import { PageLoader } from '@/shared/ui/page-loader';
 import { createFileRoute } from '@tanstack/react-router';
-import { createServerFn } from '@tanstack/react-start';
 import { useUnit } from 'effector-react';
-
-const getLeaderboardFn = createServerFn({ method: 'GET' })
-  .middleware([solanaMiddleware])
-  .handler(async ({ context }) => {
-    const { program, leaderboardPDA } = context.solana;
-
-    const leaderboard = await program.account.leaderboard.fetch(leaderboardPDA);
-
-    const players = await program.account.player.fetchMultiple(
-      leaderboard.topPlayers.map((p) => p.pubkey)
-    );
-
-    return players
-      .map((p) => (p ? processPlayerPda(p) : null))
-      .filter((p) => !!p);
-  });
 
 export const Route = createFileRoute('/_authed/leaderboard')({
   component: RouteComponent,
   loader: async () => {
     return await getLeaderboardFn();
   },
+  pendingComponent: () => <PageLoader />,
 });
 
 function RouteComponent() {

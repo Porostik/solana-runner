@@ -1,3 +1,4 @@
+/// <reference types="@twa-dev/types" />
 import { createRouter as createTanStackRouter } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
 
