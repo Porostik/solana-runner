@@ -17,4 +17,14 @@ export default defineConfig({
       spa: { enabled: true },
     }),
   ],
+
+  resolve: {
+    alias: {
+      'jayson/lib/client/browser': 'jayson/lib/client/browser/index.js',
+      'jayson/lib/client': 'jayson/lib/client/index.js',
+    },
+  },
+  ssr: {
+    noExternal: ['jayson'],
+  },
 });
