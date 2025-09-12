@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
-import tsConfigPaths from 'vite-tsconfig-paths';
 import { tanstackStart } from '@tanstack/react-start/plugin/vite';
+import path from 'path';
 
 export default defineConfig({
   server: {
@@ -8,11 +8,8 @@ export default defineConfig({
   },
 
   plugins: [
-    tsConfigPaths({
-      projects: ['./tsconfig.json'],
-    }),
     tanstackStart({
-      target: 'netlify',
+      target: 'vercel',
       customViteReactPlugin: true,
       spa: { enabled: true },
     }),
@@ -22,6 +19,15 @@ export default defineConfig({
     alias: {
       'jayson/lib/client/browser': 'jayson/lib/client/browser/index.js',
       'jayson/lib/client': 'jayson/lib/client/index.js',
+      '@rotes': path.resolve(__dirname, './src/pages'),
+      '@entities': path.resolve(__dirname, './src/entities'),
+      '@shared': path.resolve(__dirname, './src/shared'),
+      '@features': path.resolve(__dirname, './src/features'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@server-functions': path.resolve(__dirname, './src/server-functions'),
+      '@middlewares': path.resolve(__dirname, './src/middlewares'),
+      '@widgets': path.resolve(__dirname, './src/widgets'),
+      '@': path.resolve(__dirname, './src'),
     },
   },
   ssr: {

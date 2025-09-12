@@ -8,17 +8,12 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthedRouteImport } from './routes/_authed'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthedLeaderboardRouteImport } from './routes/_authed/leaderboard'
 import { Route as AuthedGameRouteImport } from './routes/_authed/game'
-import { ServerRoute as ApiCheckPlayerServerRouteImport } from './routes/api/check-player'
-
-const rootServerRouteImport = createServerRootRoute()
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -43,11 +38,6 @@ const AuthedGameRoute = AuthedGameRouteImport.update({
   id: '/game',
   path: '/game',
   getParentRoute: () => AuthedRoute,
-} as any)
-const ApiCheckPlayerServerRoute = ApiCheckPlayerServerRouteImport.update({
-  id: '/api/check-player',
-  path: '/api/check-player',
-  getParentRoute: () => rootServerRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -89,27 +79,6 @@ export interface RootRouteChildren {
   AuthedRoute: typeof AuthedRouteWithChildren
   LoginRoute: typeof LoginRoute
 }
-export interface FileServerRoutesByFullPath {
-  '/api/check-player': typeof ApiCheckPlayerServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/check-player': typeof ApiCheckPlayerServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/check-player': typeof ApiCheckPlayerServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/check-player'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/check-player'
-  id: '__root__' | '/api/check-player'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiCheckPlayerServerRoute: typeof ApiCheckPlayerServerRoute
-}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
@@ -150,17 +119,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/check-player': {
-      id: '/api/check-player'
-      path: '/api/check-player'
-      fullPath: '/api/check-player'
-      preLoaderRoute: typeof ApiCheckPlayerServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-  }
-}
 
 interface AuthedRouteChildren {
   AuthedGameRoute: typeof AuthedGameRoute
@@ -183,9 +141,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiCheckPlayerServerRoute: ApiCheckPlayerServerRoute,
-}
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()
