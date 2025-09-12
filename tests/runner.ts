@@ -5,7 +5,6 @@ import {
   Keypair,
   LAMPORTS_PER_SOL,
   PublicKey,
-  sendAndConfirmTransaction,
   Transaction,
 } from '@solana/web3.js';
 import { BN } from 'bn.js';
@@ -17,7 +16,6 @@ describe('runner', () => {
   anchor.setProvider(provider);
 
   const program = anchor.workspace.runner as Program<Runner>;
-  const tgId = 1234567890123456789n;
   const name = 'Test';
   const sponsor = new Keypair();
 
@@ -35,7 +33,7 @@ describe('runner', () => {
     }
   };
 
-  const getCreatePlayerIx = async (playerName: string = name) => {
+  const getCreatePlayerIx = async (playerName: string = name, tgId: bigint) => {
     return program.methods
       .initializePlayer(playerName, new BN(tgId))
       .accounts({
@@ -84,7 +82,7 @@ describe('runner', () => {
       .instruction();
   };
 
-  const createPlayerPda = async (playerName: string = name) => {
+  const createPlayerPda = async (playerName: string = name, tgId: bigint) => {
     const tgIdLE = Buffer.alloc(8);
     tgIdLE.writeBigUInt64LE(tgId);
 
@@ -95,11 +93,11 @@ describe('runner', () => {
     await rpc.confirmTransaction(airdropTx);
 
     const [playerPDA] = PublicKey.findProgramAddressSync(
-      [Buffer.from('tg'), Buffer.from(playerName), tgIdLE],
+      [Buffer.from('tg'), tgIdLE],
       program.programId
     );
 
-    const ix = await getCreatePlayerIx(playerName);
+    const ix = await getCreatePlayerIx(playerName, tgId);
 
     await batchTxs([[ix]]);
 
@@ -144,16 +142,16 @@ describe('runner', () => {
   };
 
   it('Initialize player pda', async () => {
-    const playerPDA = await createPlayerPda();
+    const playerPDA = await createPlayerPda('Player', 1n);
     const accountData = await program.account.player.fetch(playerPDA);
 
-    expect(accountData.name).to.equal(name);
-    expect(accountData.tgId.eq(new BN(tgId.toString()))).to.be.true;
+    expect(accountData.name).to.equal('Player');
+    expect(accountData.tgId.eq(new BN(1n))).to.be.true;
     expect(accountData.maxScore.isZero()).to.be.true;
   });
 
   it('Should increase maxScore', async () => {
-    const playerPDA = await createPlayerPda();
+    const playerPDA = await createPlayerPda('Player', 1n);
     const newScore = 1000;
 
     await increaseScore(newScore, playerPDA);
@@ -166,7 +164,7 @@ describe('runner', () => {
   });
 
   it('Should not increase maxScore if new score is lower', async () => {
-    const playerPDA = await createPlayerPda();
+    const playerPDA = await createPlayerPda('Player', 1n);
     const newScore = 1000;
 
     await increaseScore(newScore, playerPDA);
@@ -192,7 +190,7 @@ describe('runner', () => {
   it('Should add new player to leaderboard', async () => {
     const leaderboardPDA = await createLeaderboard();
 
-    const playerPDA = await createPlayerPda();
+    const playerPDA = await createPlayerPda('Player', 1n);
     await increaseScore(1000, playerPDA);
 
     await addNewPlayerToLeaderboard(leaderboardPDA, playerPDA);
@@ -207,12 +205,12 @@ describe('runner', () => {
   it('Should insert new player to a correct place at leaderboard', async () => {
     const leaderboardPDA = await createLeaderboard();
 
-    const player1PDA = await createPlayerPda();
+    const player1PDA = await createPlayerPda('Player1', 1n);
     await increaseScore(1000, player1PDA);
 
     await addNewPlayerToLeaderboard(leaderboardPDA, player1PDA);
 
-    const player2PDA = await createPlayerPda();
+    const player2PDA = await createPlayerPda('Player2', 2n);
     await increaseScore(2000, player2PDA);
 
     await addNewPlayerToLeaderboard(leaderboardPDA, player2PDA);
@@ -228,20 +226,36 @@ describe('runner', () => {
     ).to.be.true;
   });
 
+  it('Should insert single hight score', async () => {
+    const leaderboardPDA = await createLeaderboard();
+
+    const playerPDA = await createPlayerPda('Player', 1n);
+
+    await increaseScore(1000, playerPDA);
+    await addNewPlayerToLeaderboard(leaderboardPDA, playerPDA);
+    await increaseScore(2000, playerPDA);
+    await addNewPlayerToLeaderboard(leaderboardPDA, playerPDA);
+
+    const leaderboard = await program.account.leaderboard.fetch(leaderboardPDA);
+
+    expect(leaderboard.topPlayers.length === 1).to.be.true;
+    expect(leaderboard.topPlayers[0].score.eq(new BN(2000))).to.be.true;
+  });
+
   it('Should not insert player to leaderboard if his score not suitable', async () => {
     const leaderboardPDA = await createLeaderboard();
 
-    const action = async (name: string, score: number) => {
-      const playerPDA = await createPlayerPda(name);
+    const action = async (name: string, score: number, tgId: bigint) => {
+      const playerPDA = await createPlayerPda(name, tgId);
       await increaseScore(score, playerPDA);
       await addNewPlayerToLeaderboard(leaderboardPDA, playerPDA);
     };
 
     for (let i = 0; i <= 50; i++) {
-      await action(`Player-${i}`, 1000 + i);
+      await action(`Player-${i}`, 1000 + i, BigInt(i));
     }
 
-    const lowerScorePlayer = await createPlayerPda();
+    const lowerScorePlayer = await createPlayerPda('Player123', 123n);
     await increaseScore(500, lowerScorePlayer);
     await addNewPlayerToLeaderboard(leaderboardPDA, lowerScorePlayer);
 

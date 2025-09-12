@@ -11,6 +11,7 @@ pub mod runner {
         player.name = name;
         player.tg_id = tg_id;
         player.max_score = 0;
+        player.pubkey = player.key();
         Ok(())
     }
 
@@ -34,6 +35,13 @@ pub mod runner {
         let top_players = &mut leaderboard.top_players;
         let ts = Clock::get()?.unix_timestamp;
 
+        if let Some(existed_idx) = 
+            top_players
+                .iter()
+                .position(| p | { p.pubkey == player.pubkey }) {
+            top_players.remove(existed_idx);
+        }
+
         let cap = 49usize;
         let len = top_players.len();
 
@@ -44,7 +52,7 @@ pub mod runner {
                 }
         }
 
-        let new_top_player = TopPlayer { score: player.max_score, pubkey: ctx.accounts.player.key(), ts };
+        let new_top_player = TopPlayer { score: player.max_score, pubkey: player.pubkey, ts };
 
         if len == 0usize {
             top_players.push(new_top_player);
@@ -76,7 +84,7 @@ pub struct InitializePlayer<'info> {
     #[account(
         init_if_needed,
         payer = sponsor,
-        seeds = [b"tg", name.as_bytes(), tg_id.to_le_bytes().as_ref()],
+        seeds = [b"tg", tg_id.to_le_bytes().as_ref()],
         bump,
         space = Player::INIT_SPACE
     )]
@@ -106,7 +114,8 @@ pub struct Player {
     #[max_len(30)]
     pub name: String,
     pub tg_id: u64,
-    pub max_score: u64
+    pub max_score: u64,
+    pub pubkey: Pubkey
 }
 
 #[derive(Accounts)]
