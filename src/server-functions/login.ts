@@ -11,7 +11,7 @@ export const loginFn = createServerFn({ method: 'POST' })
   .handler(async ({ data, context }) => {
     const initData = verifyTelegramInitData(
       data.tgData,
-      process.env.TG_BOT_TOKEN!
+      process.env.BOT_TOKEN!
     );
 
     if (!initData.ok || !initData.user) throw new Error('Something went wrong');

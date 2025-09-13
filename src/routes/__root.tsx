@@ -70,8 +70,8 @@ function RootDocument() {
       <body>
         <RouterContextBridge />
         {!isTWAActive && <TgError />}
-        {loading && isTWAActive && <PageLoader />}
-        {!loading && isTWAActive && <Outlet />}
+        {loading && isTWAActive ? <PageLoader /> : null}
+        {!loading && isTWAActive ? <Outlet /> : null}
         <Scripts />
       </body>
     </html>
