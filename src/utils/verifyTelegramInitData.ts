@@ -32,7 +32,6 @@ export function verifyTelegramInitData(
   const authDate = Number(data['auth_date']);
   if (!Number.isFinite(authDate))
     return { ok: false, reason: 'invalid auth_date' };
-  const now = Math.floor(Date.now() / 1000);
 
   let user: any = undefined;
   if (data.user) {
