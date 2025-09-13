@@ -8,7 +8,9 @@
     "client:dev": "vite dev",
     "program:test": "mocha tests/**/*.ts",
     "client:build": "vite build",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "idl:sync:runner": "node scripts/sync-idl.mjs runner",
+    "anchor:build:runner": "anchor build && pnpm idl:sync:runner"
   },
   "private": true,
   "dependencies": {

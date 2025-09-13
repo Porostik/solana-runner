@@ -8,37 +8,24 @@ export const verifyUserFn = createServerFn({ method: 'POST' })
   .middleware([solanaMiddleware])
   .validator((data: { initData: string }) => data)
   .handler(async ({ data, context }) => {
-    try {
-      const initData = verifyTelegramInitData(
-        data.initData,
-        process.env.BOT_TOKEN!
-      );
+    const initData = verifyTelegramInitData(
+      data.initData,
+      process.env.BOT_TOKEN!
+    );
 
-      if (!initData.ok || !initData.user)
-        throw new Error('Something went wrong');
+    if (!initData.ok || !initData.user) throw new Error('Something went wrong');
 
-      const { program } = context.solana;
+    const { program } = context.solana;
 
-      const tgIdLE = Buffer.alloc(8);
-      tgIdLE.writeBigUInt64LE(initData.user.id);
+    const tgIdLE = Buffer.alloc(8);
+    tgIdLE.writeBigUInt64LE(initData.user.id);
 
-      const [playerPDA] = PublicKey.findProgramAddressSync(
-        [Buffer.from('tg'), tgIdLE],
-        program.programId
-      );
+    const [playerPDA] = PublicKey.findProgramAddressSync(
+      [Buffer.from('tg'), tgIdLE],
+      program.programId
+    );
 
-      const player = await program.account.player.fetch(playerPDA);
+    const player = await program.account.player.fetch(playerPDA);
 
-      return {
-        ok: true,
-        player: processPlayerPda(player),
-      };
-    } catch (error) {
-      console.log(error);
-
-      return {
-        ok: false,
-        error: new Error(error as any),
-      };
-    }
+    return processPlayerPda(player);
   });

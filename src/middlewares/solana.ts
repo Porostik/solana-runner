@@ -2,6 +2,7 @@ import { Connection, Keypair, PublicKey } from '@solana/web3.js';
 import { createMiddleware } from '@tanstack/react-start';
 import * as anchor from '@coral-xyz/anchor';
 import { Runner } from 'target/types/runner';
+import idl from '../idl/runner.json';
 
 let provider: anchor.AnchorProvider;
 let program: anchor.Program<Runner>;
@@ -31,7 +32,7 @@ export const solanaMiddleware = createMiddleware({ type: 'function' }).server(
     }
 
     if (!program) {
-      program = anchor.workspace.runner;
+      program = new anchor.Program(idl as anchor.Idl);
     }
 
     if (!leaderboardPDA) {
