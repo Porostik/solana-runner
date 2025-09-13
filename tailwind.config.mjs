@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     backgroundColor: {
       background: 'var(--background)',
+      secondary: 'var(--secondary)',
     },
     borderColor: {
       secondary: 'var(--secondary)',

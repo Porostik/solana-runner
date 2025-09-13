@@ -35,6 +35,8 @@ export const Game = () => {
       <Obstacle />
       <Coin />
       <BonusText />
+
+      <div className="bg-secondary w-full absolute bottom-0 h-2" />
     </div>
   );
 };

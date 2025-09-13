@@ -29,7 +29,7 @@ export const Character = () => {
   return (
     <div
       className={cn(
-        'absolute character h-[100px] w-[100px] bottom-0 ease-out left-2 z-20 will-change-transform',
+        'absolute character h-[100px] w-[100px] bottom-2 ease-out left-2 z-20 will-change-transform',
         {
           'animate-sprite-jump-up': state === 'jump',
         }

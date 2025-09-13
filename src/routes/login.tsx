@@ -40,7 +40,7 @@ function RouteComponent() {
   return (
     <div className="w-full h-full bg-background flex items-center justify-center">
       <div className="flex flex-col w-[350px]">
-        <LoginForm onSubmit={onSubmit} />;
+        <LoginForm onSubmit={onSubmit} loading={loading} />;
       </div>
     </div>
   );

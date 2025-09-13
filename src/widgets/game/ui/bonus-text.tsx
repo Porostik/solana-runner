@@ -8,7 +8,7 @@ export const BonusText = () => {
   return (
     <div
       className={cn(
-        'absolute w-full flex justify-center bottom-[150px] opacity-0 text-secondary text-lg',
+        'absolute w-full flex justify-center bottom-[158px] opacity-0 text-secondary text-lg',
         {
           'animate-bonus': isBonusTextShow,
         }

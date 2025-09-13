@@ -8,10 +8,12 @@ pub mod runner {
 
     pub fn initialize_player(ctx: Context<InitializePlayer>, name: String, tg_id: u64) -> Result<()> {
         let player = &mut ctx.accounts.player;
-        player.name = name;
-        player.tg_id = tg_id;
-        player.max_score = 0;
-        player.pubkey = player.key();
+        if player.name == "".to_string() && player.max_score == 0 {
+            player.name = name;
+            player.tg_id = tg_id;
+            player.max_score = 0;
+            player.pubkey = player.key();
+        }
         Ok(())
     }
 

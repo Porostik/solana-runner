@@ -63,6 +63,8 @@ sample({
 
 sample({
   clock: jump,
+  source: { state: $state },
+  filter: ({ state }) => state !== 'jump',
   target: makeJump,
 });
 

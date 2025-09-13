@@ -16,7 +16,7 @@ export const Obstacle = () => {
   return (
     <div
       className={cn(
-        'absolute obstacle bottom-0 opacity-0 bg-no-repeat bg-cover bg-center will-change-transform'
+        'absolute obstacle bottom-2 opacity-0 bg-no-repeat bg-cover bg-center will-change-transform'
       )}
       style={
         {

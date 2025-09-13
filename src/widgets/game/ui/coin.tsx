@@ -6,7 +6,7 @@ export const Coin = () => {
   return (
     <div
       className={cn(
-        'absolute coin bottom-[150px] opacity-0 bg-no-repeat bg-cover bg-center will-change-transform border border-secondary rounded-full'
+        'absolute coin bottom-[158px] opacity-0 bg-no-repeat bg-cover bg-center will-change-transform border border-secondary rounded-full'
       )}
       style={
         {

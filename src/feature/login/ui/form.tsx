@@ -15,9 +15,10 @@ type FormValues = z.infer<typeof schema>;
 
 interface LoginFormProps {
   onSubmit: (params: { name: string }) => void;
+  loading: boolean;
 }
 
-export const LoginForm = ({ onSubmit }: LoginFormProps) => {
+export const LoginForm = ({ onSubmit, loading }: LoginFormProps) => {
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
@@ -34,7 +35,9 @@ export const LoginForm = ({ onSubmit }: LoginFormProps) => {
         autoFocus
         control={control}
       />
-      <Button className="py-3">Ready</Button>
+      <Button className="py-3" loading={loading}>
+        Ready
+      </Button>
     </form>
   );
 };
