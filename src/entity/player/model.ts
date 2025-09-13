@@ -12,7 +12,7 @@ export const playerModel = atom(() => {
       player
         ? {
             ...player,
-            maxScore: score,
+            maxScore: player.maxScore < score ? score : player.maxScore,
           }
         : null
     );
