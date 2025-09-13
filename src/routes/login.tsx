@@ -8,6 +8,9 @@ import { playerModel } from '@/entity/player';
 import { LoginForm } from '@/feature/login/ui/form';
 import { loginFn } from '@/server-functions';
 import { useState } from 'react';
+import { useUnit } from 'effector-react';
+import { authModel } from '@/feature/auth';
+import { PageLoader } from '@/shared/ui/page-loader';
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
@@ -21,6 +24,10 @@ export const Route = createFileRoute('/login')({
 function RouteComponent() {
   const router = useRouter();
   const navigate = useNavigate();
+
+  const { verifyLoading } = useUnit({
+    verifyLoading: authModel.loading,
+  });
 
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +43,8 @@ function RouteComponent() {
     });
     setLoading(false);
   };
+
+  if (verifyLoading) return <PageLoader />;
 
   return (
     <div className="w-full h-full bg-background flex items-center justify-center">
