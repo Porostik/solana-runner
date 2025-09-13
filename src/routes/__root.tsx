@@ -11,6 +11,8 @@ import { PageLoader } from '@/shared/ui/page-loader';
 import { RouterContextBridge } from '@/feature/bridge';
 import { useVerifyPlayer } from '@/feature/auth';
 import { TgError } from '@/shared/ui/tg-error';
+import { Button } from '@/shared/ui/button';
+import { tryAirdropSponsorFn } from '@/server-functions/try-airdrop';
 
 export const Route = createRootRoute({
   head: () => ({
@@ -50,6 +52,7 @@ export const Route = createRootRoute({
   beforeLoad: async () => {
     const player =
       typeof window !== 'undefined' ? playerModel.player.getState() : null;
+    void tryAirdropSponsorFn();
 
     return {
       player: player,

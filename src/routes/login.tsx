@@ -7,6 +7,7 @@ import {
 import { playerModel } from '@/entity/player';
 import { LoginForm } from '@/feature/login/ui/form';
 import { loginFn } from '@/server-functions';
+import { useState } from 'react';
 
 export const Route = createFileRoute('/login')({
   component: RouteComponent,
@@ -21,7 +22,10 @@ function RouteComponent() {
   const router = useRouter();
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const onSubmit = async ({ name }: { name: string }) => {
+    setLoading(true);
     const tg = (window as any)?.Telegram?.WebApp;
     const initData: string = tg?.initData;
     const player = await loginFn({ data: { tgData: initData, name } });
@@ -30,6 +34,7 @@ function RouteComponent() {
     navigate({
       to: '/game',
     });
+    setLoading(false);
   };
 
   return (
