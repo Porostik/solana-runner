@@ -8,6 +8,8 @@ export const verifyUserFn = createServerFn({ method: 'POST' })
   .middleware([solanaMiddleware])
   .validator((data: { initData: string }) => data)
   .handler(async ({ data, context }) => {
+    console.log(data);
+
     const initData = verifyTelegramInitData(
       data.initData,
       process.env.BOT_TOKEN!
