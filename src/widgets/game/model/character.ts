@@ -6,6 +6,7 @@ export type State = 'idle' | 'run' | 'jump';
 const idle = createEvent();
 const run = createEvent();
 const jump = createEvent();
+const startJump = createEvent();
 
 const $state = createStore<State>('idle')
   .on(idle, () => 'idle')
@@ -57,6 +58,13 @@ const makeRun = createEffect(() => {
 });
 
 sample({
+  clock: startJump,
+  source: { state: $state },
+  filter: ({ state }) => state !== 'jump',
+  target: jump,
+});
+
+sample({
   clock: run,
   target: makeRun,
 });
@@ -72,5 +80,5 @@ export const characterModel = {
   state: $state,
   idle,
   run,
-  jump,
+  jump: startJump,
 };
