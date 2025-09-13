@@ -14,6 +14,12 @@ export const authModel = atom(() => {
   });
 
   sample({
+    clock: verifyFx.done,
+    fn: (v) => v.result,
+    target: playerModel.setPlayer,
+  });
+
+  sample({
     clock: verifyFx.pending,
     fn: () => true,
     target: setLoading,
@@ -23,12 +29,6 @@ export const authModel = atom(() => {
     clock: verifyFx.done,
     fn: () => false,
     target: setLoading,
-  });
-
-  sample({
-    clock: verifyFx.done,
-    fn: (v) => v.result,
-    target: playerModel.setPlayer,
   });
 
   sample({
