@@ -29,9 +29,7 @@ export const useVerifyPlayer = () => {
     (async () => {
       try {
         await verify({ initData });
-        setTimeout(() => {
-          router.invalidate();
-        }, 500);
+        router.invalidate();
       } catch (e) {
         console.error(e);
       }
