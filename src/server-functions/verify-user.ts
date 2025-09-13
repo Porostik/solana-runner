@@ -18,7 +18,7 @@ export const verifyUserFn = createServerFn({ method: 'POST' })
     const { program } = context.solana;
 
     const tgIdLE = Buffer.alloc(8);
-    tgIdLE.writeBigUInt64LE(initData.user.id);
+    tgIdLE.writeBigUInt64LE(BigInt(initData.user.id));
 
     const [playerPDA] = PublicKey.findProgramAddressSync(
       [Buffer.from('tg'), tgIdLE],
